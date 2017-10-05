@@ -160,7 +160,7 @@ Let's break that down:
   </tr>
   <tr>
     <td><code>folder</code></td>
-    <td>Where files of this type are stored, relative to the repo root.</td>
+    <td>Where files of this type are stored, relative to the repo root. If you want to edit specific files, see the "Data Files" section below.</td>
   </tr>
   <tr>
     <td><code>create</code></td>
@@ -211,6 +211,44 @@ collections:
     fields:
       - {label: "Language", name: "language"}
 ```
+
+### Data Files
+If instead of editing all files in a folder, you have a pre-determined set of files, you can list the files in the collection config instead of specifying a `folder`. You can specifiy as many different files as you want per collection.
+
+``` yaml
+collections:
+  - name: "settings"
+    label: "Settings"
+    editor:
+      preview: false
+    files:
+      - name: "general"
+        label: "Site Settings"
+        file: "_data/settings.json"
+        description: "General Site Settings"
+        fields:
+          - {label: "Global title", name: "site_title", widget: "string"}
+          - label: "Post Settings"
+            name: posts
+            widget: "object"
+            fields:
+              - {label: "Number of posts on frontpage", name: front_limit, widget: number}
+              - {label: "Default Author", name: author, widget: string}
+              - {label: "Default Thumbnail", name: thumb, widget: image, class: "thumb"}
+
+      - name: "authors"
+        label: "Authors"
+        file: "_data/authors.yml"
+        description: "Author descriptions"
+        fields:
+          - name: authors
+            label: Authors
+            widget: list
+            fields:
+              - {label: "Name", name: "name", widget: "string"}
+              - {label: "Description", name: "description", widget: "markdown"}
+```
+
 ## Accessing the App
 
 With your configuration complete, it's time to try it out! Go to `yoursite.com/admin` and complete the login prompt to access the admin interface. To add users, simply add them as collaborators on the GitHub repo.
